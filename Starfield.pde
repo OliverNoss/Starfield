@@ -62,7 +62,7 @@ if (oddCount<=0)
 {
 	oddUp=true;
 }
-System.out.println(oddCount +", "+ (field.length-oddCount) + ", " + timer);
+// System.out.println(oddCount +", "+ (field.length-oddCount) + ", " + timer);
 
 timer++;
 fill(0);
