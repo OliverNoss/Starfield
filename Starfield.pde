@@ -18,6 +18,7 @@ void setup()
 	for (int i = 1; i < field.length; i++) {
 		field[i] = new NormalParticle();
 	}
+	field[100]= new JumboParticle();
 // frameRate(1);
 }
 void draw()
@@ -30,7 +31,8 @@ void draw()
 	rect(0,500,500,50);
 	fill(0,100,255);
 	text(oddCount+1+ " Oddball Particles", 10, 520);
-	text(200-oddCount-1+ " Normal Particles", 150, 520);
+	text(200-oddCount-2+ " Normal Particles", 150, 520);
+	text(1 + " Jumbo Particle", 290, 520);
 	for (int i = 0; i < field.length; i++) {
 		field[i].show();
 		field[i].move();
@@ -89,7 +91,7 @@ class NormalParticle implements Particle
 	public void show()
 	{
 		stroke(rgb);
-		// stroke(255);
+		strokeWeight(5);
 		noFill();
 		if (key=='1')
 		{
@@ -155,7 +157,56 @@ class NormalParticle implements Particle
 		
 	}
 	
-	
+class JumboParticle extends NormalParticle
+{
+	JumboParticle()
+	{
+		ringHeight=(int)(Math.random()*10+25);
+		ringWidth=(int)(Math.random()*10+25);
+	}
+	public void show()
+	{
+		stroke(rgb);
+		noFill();
+		if (key=='1')
+		{
+			strokeWeight(10);
+			noFill();
+			stroke(rgb);
+			ellipse((float)x, (float)y, (float)ringWidth, (float)ringHeight);
+
+			fade=50;
+		}
+		else if (key=='2')
+		{
+			strokeWeight(50);
+			point((float)x, (float)y);
+
+			fade=50;
+		}
+		else {
+			stroke(255);
+			strokeWeight(50);
+
+			point((float)x, (float)y);
+			fade=10;
+		}
+	}
+public void edgeBehavior()
+{
+	if (x <= ringWidth/2 || x >= 500-ringWidth/2 || y <= ringHeight/2 || y >= 500-ringHeight/2)
+		{
+		x= 250;
+		y= 250;
+		angle=Math.random()*TWO_PI;
+		speed=Math.random()*3+1;
+		rgb= color((int)(Math.random()*200),(int)(Math.random()*200),(int)(Math.random()*200),200); 
+		ringHeight=(int)(Math.random()*10+25);
+		ringWidth=(int)(Math.random()*10+25);
+		resetCounter++;
+	}
+}
+}
 
 interface Particle
 {
